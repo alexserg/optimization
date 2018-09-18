@@ -14,9 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
 
 @RestController
+@RequestMapping("/demo1")
 public class Opdemo1Controller {
 
 	private static final String URL = "http://export.rbc.ru/free/selt.0/free.fcgi?period=DAILY&tickers=USD000000TOD&separator=TAB&data_format=BROWSER";
@@ -99,6 +99,7 @@ public class Opdemo1Controller {
 
 			quotes.add(quote);
 		}
+		System.out.println();
 		return quotes;
 	}
 

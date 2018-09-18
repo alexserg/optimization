@@ -1,4 +1,4 @@
-package ru.sberbank.optdemo1;
+package ru.sberbank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,8 @@ public class Optdemo1Application {
 
 	@Scheduled(cron = "* 1/60 * * * *") // every day at one AM
 //    @Scheduled(fixedDelay = 1000) // once a second
-	public void readApplovin() {
-		System.out.println("I'm alive!");
+	public void readApplovin() throws InterruptedException {
+		Thread.sleep(1);
+//		System.out.println("I'm alive!");
 	}
 }
