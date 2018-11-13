@@ -1,10 +1,7 @@
 package ru.sberbank.optdemo1;
 
-import com.sun.org.apache.xpath.internal.operations.Quo;
-import com.sun.tools.corba.se.idl.InterfaceGen;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
