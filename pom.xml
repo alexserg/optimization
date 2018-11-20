@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ru.sberbank</groupId>
@@ -11,13 +11,6 @@
 	<name>optdemo1</name>
 	<description>Demo project for Spring Boot</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,30 +19,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.ning</groupId>
-			<artifactId>async-http-client</artifactId>
-			<version>1.9.35</version>
-		</dependency>
-		<dependency>
-			<groupId>org.asynchttpclient</groupId>
-			<artifactId>async-http-client</artifactId>
-			<version>2.4.9</version>
-		</dependency>
 		<dependency>
 			<groupId>org.openjdk.jmh</groupId>
 			<artifactId>jmh-core</artifactId>
@@ -66,10 +35,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.2</version>
@@ -82,20 +47,6 @@
 						<configuration>
 							<finalName>${uberjar.name}</finalName>
 							<transformers>
-									<transformer
-											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-										<resource>META-INF/spring.handlers</resource>
-									</transformer>
-									<transformer
-											implementation="org.springframework.boot.maven.PropertiesMergingResourceTransformer">
-										<resource>META-INF/spring.factories</resource>
-									</transformer>
-									<transformer
-											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-										<resource>META-INF/spring.schemas</resource>
-									</transformer>
-									<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>org.openjdk.jmh.Main</mainClass>
