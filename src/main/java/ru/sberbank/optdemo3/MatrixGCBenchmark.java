@@ -17,7 +17,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode({Mode.AverageTime, Mode.Throughput})
 @State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class MatrixGCBenchmark {
@@ -58,10 +58,9 @@ public class MatrixGCBenchmark {
 	public static void main(String[] args) throws RunnerException {
 		Options opt = new OptionsBuilder().include(MatrixGCBenchmark.class.getSimpleName()).warmupIterations(2)
 				.measurementIterations(5)
-				 .addProfiler(PausesProfiler.class)
 				 .addProfiler(GCProfiler.class)
-				.jvmArgs("-XX:+UseParallelGC")
-				.threads(1).forks(1).build();
+				.jvmArgs("-XX:+UseParallelGC", "-Xlog:gc:log.txt")
+				.threads(10).forks(1).build();
 
 		new Runner(opt).run();
 	}
