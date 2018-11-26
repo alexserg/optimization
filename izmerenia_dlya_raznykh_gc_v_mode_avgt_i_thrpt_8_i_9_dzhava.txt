@@ -1,0 +1,166 @@
+éëéäàçÄ, èéíÄçàç
+ÇÂÏﬂ ÔÓÎÛ˜ËÎÓÒ¸ Ì‡ËÏÂÌ¸¯ËÏ ‰Îﬂ UseParallelGC. ÁÌ‡˜ËÚ ‚ÂÏﬂ ÓÔÂ‡ˆËË Ò ˝ÚËÏ ÍÓÎÎÂÍÚÓÓÏ Ò‡ÏÓÂ Ï‡ÎÂÌ¸ÍÓÂ.
+èÓ ÏÓ‰Û ÍÓÎ-‚Ó ÓÔÂ‡ˆËÈ ‚ ÒÂÍÛÌ‰Û Ï˚ ‚Ë‰ËÏ, ˜ÚÓ Ì‡Ë·ÓÎ¸¯ÂÂ ˜ËÒÎÓ ÓÔÂ‡ˆËÈ ‚ ÒÂÍÛÌ‰Û Û UseParallelGC Ë UseConcMarkSweepGC. ùÚÓ ‰Îﬂ 8 ‰Ê‡‚˚, ‰Îﬂ 9 ÔÓıÓÊËÂ ÂÁÛÎ¸Ú‡Ú˚.
+
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseG1GC  -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                               Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               avgt    5        273,049 ?        2,650   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                avgt    5       1304,403 ?       32,135  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm           avgt    5  544000108,000 ?        0,001    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Eden_Space       avgt    5       1299,240 ?      187,357  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Eden_Space.norm  avgt    5  541904076,800 ? 84038346,387    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen          avgt    5          0,003 ?        0,015  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen.norm     avgt    5       1360,400 ?     6463,199    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                     avgt    5         68,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                      avgt    5        148,000                     ms
+
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseParallelGC  -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                                   Mode  Cnt          Score           Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt    5        134,466 ?         2,808   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                    avgt    5       2633,795 ?        43,047  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm               avgt    5  544000054,000 ?         0,001    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space           avgt    5       2672,153 ?       925,248  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space.norm      avgt    5  552009728,000 ? 195052179,645    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space       avgt    5          0,095 ?         0,156  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space.norm  avgt    5      19660,800 ?     32323,468    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                         avgt    5         35,000                  counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                          avgt    5         29,000                      ms
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseConcMarkSweepGC -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                                    Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    avgt    5        142,300 ?        1,132   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                     avgt    5       2539,902 ?       30,928  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                avgt    5  544000054,000 ?        0,001    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Eden_Space           avgt    5       2541,741 ?       76,834  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Eden_Space.norm      avgt    5  544394433,800 ? 15419105,926    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space       avgt    5          0,026 ?        0,011  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space.norm  avgt    5       5530,400 ?     2353,543    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                          avgt    5        304,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                           avgt    5        213,000                     ms
+
+---------------------------------------
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseG1GC  -t 1 -f 1 -prof gc -bm thrpt -tu ms
+Benchmark                                                                Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               thrpt    5          0,004 ?        0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                thrpt    5       1312,264 ?       26,940  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm           thrpt    5  544000108,000 ?        0,001    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Eden_Space       thrpt    5       1306,987 ?      176,808  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Eden_Space.norm  thrpt    5  541904076,800 ? 84038346,387    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen          thrpt    5          0,003 ?        0,013  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen.norm     thrpt    5       1448,000 ?     5287,292    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                     thrpt    5         68,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                      thrpt    5        145,000                     ms
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseParallelGC  -t 1 -f 1 -prof gc -bm thrpt -tu ms
+Benchmark                                                                    Mode  Cnt          Score           Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   thrpt    5          0,007 ?         0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                    thrpt    5       2637,533 ?        44,049  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm               thrpt    5  544000054,800 ?         6,888    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space           thrpt    5       2699,458 ?       928,009  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space.norm      thrpt    5  556675891,200 ? 186112479,860    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space       thrpt    5          0,087 ?         0,157  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space.norm  thrpt    5      18022,400 ?     32706,008    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                         thrpt    5         36,000                  counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                          thrpt    5         30,000                      ms
+
+
+"C:\Program Files\Java\jdk1.8.0_112\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseConcMarkSweepGC -t 1 -f 1 -prof gc -bm thrpt -tu ms
+Benchmark                                                                     Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    thrpt    5          0,007 ?        0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                     thrpt    5       2555,006 ?       46,344  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                thrpt    5  544000054,800 ?        6,888    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Eden_Space           thrpt    5       2556,861 ?       87,175  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Eden_Space.norm      thrpt    5  544394438,400 ? 15419066,319    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space       thrpt    5          0,028 ?        0,017  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space.norm  thrpt    5       6045,200 ?     3653,389    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                          thrpt    5        304,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                           thrpt    5        202,000                     ms
+
+_________________________________
+
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseG1GC  -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                                                  Mode  Cnt          Score           Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                                  avgt    5        269,573 ?         2,278   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                                   avgt    5       1315,603 ?        22,107  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                              avgt    5  544000105,200 ?        16,873    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'       avgt    5          0,003 ?         0,007  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'.norm  avgt    5       1172,000 ?      2848,706    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen                             avgt    5       1310,426 ?       291,669  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen.norm                        avgt    5  541851648,000 ? 119628361,581    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                                        avgt    5         39,000                  counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                                         avgt    5         32,000                      ms
+
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseParallelGC  -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                                   Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt    5        124,644 ?        6,440   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                    avgt    5       2861,430 ?      300,769  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm               avgt    5  544000047,889 ?        9,577    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space           avgt    5          0,090 ?        0,080  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space.norm      avgt    5      17021,156 ?    14215,553    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space       avgt    5       2888,509 ?      689,218  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space.norm  avgt    5  548789725,867 ? 84066033,918    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                         avgt    5         38,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                          avgt    5         32,000                     ms
+
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseConcMarkSweepGC -t 1 -f 1 -prof gc -tu ms
+Benchmark                                                                                  Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                                  avgt    5        126,333 ?       13,713   ms/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                                   avgt    5       2791,134 ?      414,998  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                              avgt    5  544000048,733 ?       11,951    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'       avgt    5          0,025 ?        0,031  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'.norm  avgt    5       4902,711 ?     6817,893    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space                     avgt    5       2800,203 ?      407,596  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space.norm                avgt    5  545787266,844 ? 11036719,457    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                                        avgt    5        320,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                                         avgt    5        111,000                     ms
+
+-----------------------------------------------
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseG1GC  -t 1 -f 1 -prof gc -bm thrpt -tu ms
+Benchmark                                                                                   Mode  Cnt          Score           Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                                  thrpt    5          0,004 ?         0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                                   thrpt    5       1320,307 ?        19,148  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                              thrpt    5  544000105,200 ?        16,873    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'       thrpt    5          0,002 ?         0,005  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'.norm  thrpt    5        869,600 ?      2034,120    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen                             thrpt    5       1314,964 ?       280,786  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.G1_Old_Gen.norm                        thrpt    5  541851648,000 ? 119628361,581    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                                        thrpt    5         39,000                  counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                                         thrpt    5         32,000                      ms
+
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseParallelGC  -t 1 -f 1 -prof gc -bm thrpt -tu ms
+Benchmark                                                                    Mode  Cnt          Score           Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   thrpt    5          0,008 ?         0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                    thrpt    5       2792,580 ?       292,456  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm               thrpt    5  544000051,044 ?        15,942    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space           thrpt    5          0,100 ?         0,136  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Eden_Space.norm      thrpt    5      19478,756 ?     25678,333    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space       thrpt    5       2822,167 ?      1049,215  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.PS_Survivor_Space.norm  thrpt    5  549111580,444 ? 158147417,787    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                         thrpt    5         30,000                  counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                          thrpt    5         33,000                      ms
+
+
+"C:\Program Files\Java\jdk-9.0.1\bin\java" -jar benchmarks.jar -i 5 -wi 2 -jvmArgs=-XX:+UseConcMarkSweepGC -t 1 -f 1 -prof gc -bm thrpt -tu ms 
+Benchmark                                                                                   Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                                  thrpt    5          0,009 ?        0,001  ops/ms
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate                                   thrpt    5       3036,737 ?       64,887  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.alloc.rate.norm                              thrpt    5  544000046,044 ?        6,123    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'       thrpt    5          0,028 ?        0,024  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.CodeHeap_'non-profiled_nmethods'.norm  thrpt    5       4948,622 ?     4353,743    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space                     thrpt    5       3038,945 ?      117,269  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.churn.Par_Survivor_Space.norm                thrpt    5  544394444,800 ? 16786168,238    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.count                                        thrpt    5        342,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:∑gc.time                                         thrpt    5        101,000                     ms
