@@ -22,7 +22,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class MatrixGCBenchmark {
 
-	private static final int ROWS = 100;
+	private static final int ROWS = 200;
 
 	private static Matrix A, B, C;
 
@@ -60,7 +60,7 @@ public class MatrixGCBenchmark {
 				.measurementIterations(5)
 				 .addProfiler(PausesProfiler.class)
 				 .addProfiler(GCProfiler.class)
-				.jvmArgs("-XX:+UseParallelGC")
+				.jvmArgs("-XX:+UseParallelGC", "-XX:+PrintGCDetails", "-Xloggc:/tmp/gc.log")
 				.threads(1).forks(1).build();
 
 		new Runner(opt).run();
