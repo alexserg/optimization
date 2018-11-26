@@ -1,0 +1,103 @@
+﻿Выбираем parallel, так как avgt = 146056,473 ± 2413,634 us/op меньше, чем в остальных GC.
+
+G1
+1 thread
+Benchmark                                                               Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               avgt    5     345702,485 ±    52849,834   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                avgt    5       1050,793 ±      297,824  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm           avgt    5  544000173,867 ±      417,934    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space       avgt    5       1048,372 ±      406,465  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space.norm  avgt    5  541904076,800 ± 56025564,258    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen          avgt    5          0,008 ±        0,040  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen.norm     avgt    5       4122,667 ±    18530,591    B/op
+
+
+
+16 threads
+Benchmark                                                                Mode  Cnt          Score         Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               thrpt    5         ≈ 10⁻⁵                ops/us
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                thrpt    5       5606,112 ±     792,684  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm           thrpt    5  544000599,437 ±     170,549    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space       thrpt    5       5650,583 ±     817,866  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space.norm  thrpt    5  548303009,415 ± 5946404,960    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen          thrpt    5          0,020 ±       0,011  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen.norm     thrpt    5       1905,639 ±    1302,888    B/op
+
+
+20 threads
+Benchmark                                                               Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               avgt    5    1553006,576 ±    69373,680   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                avgt    5       5961,356 ±      247,442  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm           avgt    5  542017581,600 ± 17073909,339    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space       avgt    5       6036,676 ±      112,468  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space.norm  avgt    5  548871867,384 ±  2554058,452    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen          avgt    5          0,021 ±        0,011  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen.norm     avgt    5       1887,243 ±      974,333    B/op
+
+parallel
+1 thread
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt    5     146056,473 ±      2413,634   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                    avgt    5       2384,428 ±        25,423  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm               avgt    5  544000080,686 ±       163,350    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space           avgt    5       2346,308 ±       709,714  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space.norm      avgt    5  535283068,343 ± 160758874,388    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space       avgt    5          0,094 ±         0,107  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space.norm  avgt    5      21533,257 ±     24183,631    B/op
+
+16 thread
+Benchmark                                                                   Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt    5     763949,382 ±   118108,669   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                    avgt    5       8712,812 ±      540,361  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm               avgt    5  544000369,668 ±      144,892    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space           avgt    5       8703,795 ±      586,697  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space.norm      avgt    5  543436782,570 ± 13965149,362    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space       avgt    5          0,223 ±        0,070  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space.norm  avgt    5      13943,830 ±     3796,649    B/op
+
+Benchmark                                                                    Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   thrpt    5         ≈ 10⁻⁵                 ops/us
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                    thrpt    5       9102,919 ±      130,670  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm               thrpt    5  544000405,889 ±      322,921    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space           thrpt    5       9086,254 ±      254,096  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space.norm      thrpt    5  543003966,094 ± 12603205,507    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space       thrpt    5          0,110 ±        0,114  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space.norm  thrpt    5       6553,600 ±     6738,383    B/op
+
+serial
+1 thread
+MatrixGCBenchmark.multiplyObjectImmutable                                avgt    5     151621,503 ±     2486,148   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                 avgt    5       2325,410 ±       25,266  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm            avgt    5  544000078,400 ±      143,669    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Eden_Space           avgt    5       2327,057 ±       54,972  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Eden_Space.norm      avgt    5  544394415,086 ± 17621791,063    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Survivor_Space       avgt    5          0,006 ±        0,007  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Survivor_Space.norm  avgt    5       1394,743 ±     1738,473    B/op
+
+Benchmark                                                                 Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                thrpt    5         ≈ 10⁻⁵                 ops/us
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                 thrpt    5       2338,209 ±       35,166  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm            thrpt    5  544000665,829 ±      143,669    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Eden_Space           thrpt    5       2339,920 ±       92,965  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Eden_Space.norm      thrpt    5  544394409,600 ± 17621800,411    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Survivor_Space       thrpt    5          0,009 ±        0,006  MB/sec
+
+CMS
+1 thread
+Benchmark                                                                    Mode  Cnt          Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    avgt    5     153980,068 ±     5853,634   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                     avgt    5       2301,285 ±       60,210  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm                avgt    5  544000665,829 ±      143,669    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space           avgt    5       2302,907 ±       73,633  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space.norm      avgt    5  544394422,400 ± 17621775,318    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space       avgt    5          0,024 ±        0,015  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space.norm  avgt    5       5713,371 ±     3442,522    B/op
+
+100 threads
+Benchmark                                                                    Mode   Cnt          Score        Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    avgt     5    4974945,830 ± 181500,669   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                     avgt     5      10060,163 ±     51,709  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm                avgt     5  544000233,139 ±     38,768    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space           avgt     5      10073,254 ±     56,933  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space.norm      avgt     5  544708028,441 ± 448208,112    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space       avgt     5          0,112 ±      0,006  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space.norm  avgt     5       6061,010 ±    273,564    B/op
