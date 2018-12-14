@@ -58,7 +58,6 @@ public class MatrixGCBenchmark {
 	public static void main(String[] args) throws RunnerException {
 		Options opt = new OptionsBuilder().include(MatrixGCBenchmark.class.getSimpleName()).warmupIterations(2)
 				.measurementIterations(5)
-				 .addProfiler(PausesProfiler.class)
 				 .addProfiler(GCProfiler.class)
 				.jvmArgs("-XX:+UseParallelGC", "-XX:+PrintGCDetails", "-Xloggc:/tmp/gc.log")
 				.threads(1).forks(1).build();
