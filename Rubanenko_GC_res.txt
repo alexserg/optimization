@@ -1,0 +1,260 @@
+Постоянные параметры: # Warmup: 5 iterations, 1 s each [количество итераций прогрева],
+                      # Measurement: 5 iterations, 1 s each [количество итераций измерения]
+Переменные параметры: # Threads: 5 threads, will synchronize iterations [количество тредов, выполняющих метод перемножения матриц] or
+                      # Threads: 50 threads, will synchronize iterations
+
+Исходя из результатов, следует:
+
+threads(5):
+1)3627541,346 ±   115751,289   us/op [ParallelGC]
+2)3969135,843 ±   454801,623   us/op [ConcMarkSweepGC]
+3)6668068,082 ±   267835,824   us/op [G1GC]
+
+treads(50):
+1)31874480,610 ± 1770301,182   us/op [ParallelGC]
+2)34730334,681 ±  977927,484   us/op [ConcMarkSweepGC]
+3)56697933,441 ± 1719112,990   us/op [G1GC]
+
+Посмотрим на длительность паузы в среднем.
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg 
+
+threads(50):
+1)38,555  ms [ConcMarkSweepGC]
+2)75,014  ms [G1GC]
+3)169,457 ms [ParallelGC]
+
+Выводы:
+Таким образом, оптимальным является ParallelGC. Число потоков, которые будут использоваться при сборке мусора в ParallelGC
+по умолчанию равно количеству ядер в процессоре, но этот параметр можно настраивать с помощью опции "-XX:ParallelGCThreads=".
+ConcMarkSweepGC больше ориентирован на минимизацию времен простоя.Можно еще заметить, что увеличивая число threads у нас
+прямопропорционально увеличивается объем данных, а значит и время на сборку мусора. 
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseParallelGC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 5 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:04:10
+
+Benchmark                                                                   Mode  Cnt           Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt    5     3627541,346 ±   115751,289   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                    avgt    5        9043,506 ±      913,205  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm               avgt    5  7552000184,897 ±       22,867    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space           avgt    5        9046,638 ±      901,877  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space.norm      avgt    5  7554693935,587 ± 83085399,762    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space       avgt    5           0,281 ±        0,096  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space.norm  avgt    5      234273,196 ±    63560,299    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                         avgt    5        1045,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                          avgt    5         493,000                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                           avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                       avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                     avgt                  ≈ 0                      #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                     avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                     avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                     avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                     avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                     avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                    avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999                   avgt                  NaN                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                     avgt                  NaN                     ms
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseParallelGC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 50 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:18:19
+
+Benchmark                                                                   Mode   Cnt           Score         Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                   avgt     5    31874480,610 ± 1770301,182   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                    avgt     5       11245,259 ±     442,589  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm               avgt     5  7552000284,370 ±      49,752    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space           avgt     5       11251,092 ±     440,731  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Eden_Space.norm      avgt     5  7555920425,664 ± 2111933,711    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Old_Gen              avgt     5           0,951 ±       1,416  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Old_Gen.norm         avgt     5      639395,737 ±  962157,545    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space       avgt     5           0,247 ±       0,021  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.PS_Survivor_Space.norm  avgt     5      165907,243 ±   10755,094    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                         avgt     5        8907,000                counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                          avgt     5        4590,000                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                           avgt  1139      193011,089                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                       avgt               169,457                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                     avgt              1139,000                     #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                     avgt                28,901                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                     avgt               159,121                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                     avgt               299,368                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                     avgt               323,486                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                     avgt               374,866                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                    avgt               413,988                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999                   avgt               415,236                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                     avgt               415,236                    ms
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 5 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:02:51
+
+Benchmark                                                                    Mode  Cnt           Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    avgt    5     3969135,843 ±   454801,623   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                     avgt    5        8322,933 ±      595,403  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm                avgt    5  7545375251,514 ± 57043269,381    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space           avgt    5        8342,541 ±      580,634  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space.norm      avgt    5  7563194192,457 ±  8810969,827    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space       avgt    5           0,085 ±        0,015  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space.norm  avgt    5       77315,200 ±    16737,230    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                          avgt    5        7391,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                           avgt    5        3919,000                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                            avgt    2          36,078                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                        avgt               18,039                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                      avgt                2,000                      #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                      avgt               17,727                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                      avgt               18,039                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                      avgt               18,350                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                      avgt               18,350                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                      avgt               18,350                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                     avgt               18,350                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999                    avgt               18,350                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                      avgt               18,350                     ms
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 50 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:19:56
+
+Benchmark                                                                    Mode  Cnt           Score         Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                                    avgt    5    34730334,681 ±  977927,484   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                     avgt    5       10328,852 ±     102,463  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm                avgt    5  7552000207,700 ±      61,095    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.CMS_Old_Gen              avgt    5           0,295 ±       2,541  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.CMS_Old_Gen.norm         avgt    5      216495,341 ± 1864090,173    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Code_Cache               avgt    5          ≈ 10⁻⁵                MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Code_Cache.norm          avgt    5          10,551 ±      90,850    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space           avgt    5       10353,278 ±     103,287  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Eden_Space.norm      avgt    5  7569859050,360 ±  931969,989    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space       avgt    5           0,148 ±       0,007  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.Par_Survivor_Space.norm  avgt    5      108459,297 ±    5426,910    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                          avgt    5       78626,000                counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                           avgt    5       33234,000                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                            avgt   13         501,219                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                        avgt               38,555                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                      avgt               13,000                     #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                      avgt               24,740                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                      avgt               29,098                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                      avgt              103,861                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                      avgt              142,868                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                      avgt              142,868                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                     avgt              142,868                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999                    avgt              142,868                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                      avgt              142,868                    ms
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseG1GC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 5 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:05:45
+
+Benchmark                                                               Mode  Cnt           Score          Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               avgt    5     6668068,082 ±   267835,824   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                avgt    5        4983,823 ±      291,181  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm           avgt    5  7552000541,451 ±      498,573    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space       avgt    5        5027,405 ±      300,639  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space.norm  avgt    5  7618008345,319 ± 21193565,288    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen          avgt    5           0,020 ±        0,003  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen.norm     avgt    5       30472,167 ±     5450,726    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                     avgt    5        3298,000                 counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                      avgt    5        3746,000                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                       avgt   13         312,803                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                   avgt               24,062                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                 avgt               13,000                      #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                 avgt               17,334                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                 avgt               18,481                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                 avgt               60,097                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                 avgt               80,871                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                 avgt               80,871                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                avgt               80,871                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999               avgt               80,871                     ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                 avgt               80,871                     ms
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_112, VM 25.112-b15
+# VM invoker: C:\Program Files\Java\jdk1.8.0_112\jre\bin\java.exe
+# VM options: -XX:+UseG1GC -XX:+PrintGCDetails -Xloggc:gc.log
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 50 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.sberbank.optdemo3.MatrixGCBenchmark.multiplyObjectImmutable
+
+# Run complete. Total time: 00:30:33
+
+Benchmark                                                               Mode   Cnt           Score         Error   Units
+MatrixGCBenchmark.multiplyObjectImmutable                               avgt     5    56697933,441 ± 1719112,990   us/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate                avgt     5        6331,561 ±     119,191  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.alloc.rate.norm           avgt     5  7552000305,890 ±       3,671    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space       avgt     5        6384,471 ±     118,557  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Eden_Space.norm  avgt     5  7615110783,141 ± 2912564,796    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen          avgt     5           0,033 ±       0,006  MB/sec
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.churn.G1_Old_Gen.norm     avgt     5       39854,636 ±    7313,174    B/op
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.count                     avgt     5       35595,000                counts
+MatrixGCBenchmark.multiplyObjectImmutable:·gc.time                      avgt     5       31152,000                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses                       avgt  2552      191435,375                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.avg                   avgt                75,014                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.count                 avgt              2552,000                     #
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.00                 avgt                17,072                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.50                 avgt                62,652                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.90                 avgt               160,956                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.95                 avgt               201,589                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.99                 avgt               252,707                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.999                avgt               296,747                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p0.9999               avgt               299,368                    ms
+MatrixGCBenchmark.multiplyObjectImmutable:·pauses.p1.00                 avgt               299,368                    ms
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
